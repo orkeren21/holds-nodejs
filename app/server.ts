@@ -1,6 +1,10 @@
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
+const Sequelize = require('sequelize');
+const dotenv = require('dotenv');
+
+const getModels = require('./models');
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
