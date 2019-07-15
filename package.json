@@ -1,0 +1,22 @@
+{
+  "name": "holds-nodejs",
+  "version": "1.0.0",
+  "description": "Holds POC in Nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WeConnect/holds-nodejs.git"
+  },
+  "author": "Or Keren",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WeConnect/holds-nodejs/issues"
+  },
+  "homepage": "https://github.com/WeConnect/holds-nodejs#readme",
+  "dependencies": {
+    "graphql": "^14.4.2"
+  }
+}
