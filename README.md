@@ -1,2 +1,2 @@
-# holds_nodejs
+# holds-nodejs
 A new Holds Service POC written in Node.js
