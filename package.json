@@ -4,7 +4,10 @@
   "description": "Holds POC in Nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
+    "dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
+    "prod": "tsc && node ./build/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,8 @@
   },
   "homepage": "https://github.com/WeConnect/holds-nodejs#readme",
   "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.8.0",
     "graphql": "^14.4.2"
   }
 }
