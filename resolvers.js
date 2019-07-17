@@ -19,7 +19,7 @@ export default {
             id: id
             }
         }),
-        createWishlistEntry: (parent, { wishlistId, reservableUUID, createdBy, opportunitySFID }, { db }, info) => {
+        createWishlistEntry: async (parent, { wishlistId, reservableUUID, createdBy, opportunitySFID }, { db }, info) => {
             if(wishlistId){
                 db.wishlistEntries.create({
                     wishlistId: wishlistId,
@@ -28,15 +28,14 @@ export default {
                 })
             }
             else{
-                db.wishlists.create({
+                let wishlist = await db.wishlists.create({
                     opportunitySFID: opportunitySFID
-                }).then((wishlist) => {
-                    db.wishlistEntries.create({
+                });
+                return db.wishlistEntries.create({
                     wishlistId: wishlist.id,
                     reservableUUID: reservableUUID,
                     createdBy: createdBy
                     });
-                });
             }
         }
     }
