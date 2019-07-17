@@ -1,7 +1,7 @@
 export default `
   type WishlistEntry {
     id: ID!
-    wishlist: Wishlist!
+    wishlistId: Int!
     reservableUUID: String!
     createdBy: String!
     createdAt: String! 
@@ -19,9 +19,11 @@ export default `
     wishlists: [Wishlist!]!
     wishlist(id: ID!): Wishlist!
     wishlist_by_opp(opportunitySFID: String!): Wishlist!
+    wishlistEntries: [WishlistEntry!]!
   }
   type Mutation {
-    createWishlist(opportunitySFID: String): Wishlist!
+    createWishlist(opportunitySFID: String!): Wishlist!
     deleteWishlist(id: ID!): Int!
+    createWishlistEntry(wishlistId: Int, reservableUUID: String!, createdBy: String!, opportunitySFID: String): WishlistEntry
   }
 `;
