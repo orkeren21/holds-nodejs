@@ -18,7 +18,7 @@ export default `
   type Query {
     wishlists: [Wishlist!]!
     wishlist(id: ID!): Wishlist!
-    wishlist_by_opp(opportunitySFID: String!): Wishlist!
+    wishlistByOpp(opportunitySFID: String!): Wishlist!
     wishlistEntries: [WishlistEntry!]!
   }
   type Mutation {
