@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-
-    return sequelize.define('wishlists', {
+    const Wishlist = sequelize.define('wishlists', {
             id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -30,4 +29,11 @@ module.exports = (sequelize, DataTypes) => {
     {
         freezeTableName: true,
     });
+
+    Wishlist.associate = (models) => {
+        console.log(models)
+        Wishlist.hasMany(models.wishlistEntries);
+    }
+
+    return Wishlist;
 };
