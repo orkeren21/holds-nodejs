@@ -1,15 +1,9 @@
 import db from "./models";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
-import dotenv from "dotenv";
-dotenv.config();
+import { logger } from "./utils/logger";
 
 const { ApolloServer, gql } = require('apollo-server');
-
-var Logger = require('le_node');
-var logger = new Logger({
-  token: process.env.LOGENTRIES_TOKEN
-});
 
 // In the most basic sense, the ApolloServer can be started
 // by passing type definitions (typeDefs) and the resolvers

@@ -1,10 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-var Logger = require('le_node');
-var logger = new Logger({
-  token: process.env.LOGENTRIES_TOKEN
-});
+import { logger } from "./utils/logger";
 
 export default {
     Wishlist: {
