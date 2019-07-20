@@ -7,7 +7,7 @@ import { ApolloServer } from "apollo-server";
 import typeDefs from "../schema";
 import resolvers from "../resolvers";
 import db from "../models";
-import truncate from "../utils/truncate"
+import truncate from "../utils/truncate";
 
 ("use strict");
 
@@ -36,8 +36,18 @@ const GET_WISHLISTS = gql`
 `;
 //wishlistId: Int, reservableUUID: String!, createdBy: String!, opportunitySFID: String
 const CREATE_WISHLIST_ENTRY = gql`
-  mutation CreateWishlistEntry($wishlistId: Int, $reservableUUID: String!, $createdBy: String!, $opportunitySFID: String) { 
-    createWishlistEntry(wishlistId: $wishlistId, reservableUUID: $reservableUUID, createdBy: $createdBy, opportunitySFID: $opportunitySFID) {
+  mutation CreateWishlistEntry(
+    $wishlistId: Int
+    $reservableUUID: String!
+    $createdBy: String!
+    $opportunitySFID: String
+  ) {
+    createWishlistEntry(
+      wishlistId: $wishlistId
+      reservableUUID: $reservableUUID
+      createdBy: $createdBy
+      opportunitySFID: $opportunitySFID
+    ) {
       id
       wishlistId
       reservableUUID
@@ -49,51 +59,41 @@ const CREATE_WISHLIST_ENTRY = gql`
 `;
 
 beforeAll(async () => {
-    await truncate();
+  await truncate();
 });
 
-afterAll( () => {
+afterAll(() => {
   // Closing the DB connection allows Jest to exit successfully.
-  db.sequelize.close().then(() => console.log('shut down gracefully'));
+  db.sequelize.close().then(() => console.log("shut down gracefully"));
 });
 
-describe("Queries", () => {
-  it("fetches a list of wishlists", async () => {
-    // create an instance of ApolloServer that mocks out context, while reusing
-    // existing dataSources, resolvers, and typeDefs.
-    // This function returns the server instance as well as our dataSource
-    // instances, so we can overwrite the underlying fetchers
-    const { server } = constructTestServer();
-
-    // mock the datasources' underlying fetch methods, whether that's a REST
-    // lookup in the RESTDataSource or the store query in the Sequelize datasource
-    // launchAPI.get = jest.fn(() => [mockLaunchResponse]);
-    // userAPI.store = mockStore;
-    // userAPI.store.trips.findAll.mockReturnValueOnce([
-    //   {dataValues: {launchId: 1}},
-    // ]);
-
-    // use our test server as input to the createTestClient fn
-    // This will give us an interface, similar to apolloClient.query
-    // to run queries against our instance of ApolloServer
-    const { query } = createTestClient(server);
-    const res = await query({ query: GET_WISHLISTS });
-    console.log(res.data.wishlists);
-    expect(true).toBe(true);
-    //expect(res).toMatchSnapshot();
-  });
-});
-
-describe("Mutations", () => {
+describe("Mutations and Queries", () => {
+  let wishlistId = null;
   it("creates a wishlist entry", async () => {
     const { server } = constructTestServer();
 
-    const {mutate} = createTestClient(server);
+    const { mutate } = createTestClient(server);
     const res = await mutate({
       mutation: CREATE_WISHLIST_ENTRY,
-      variables: {reservableUUID: "ecddf807-ad16-4a08-8467-5769da078e9e", createdBy: "Or Keren", opportunitySFID: "opp_id" },
+      variables: {
+        reservableUUID: "ecddf807-ad16-4a08-8467-5769da078e9e",
+        createdBy: "Or Keren",
+        opportunitySFID: "opp_id"
+      }
     });
     //console.log(res.data.createWishlistEntry.reservableUUID);
-    expect(res.data.createWishlistEntry.reservableUUID).toBe("ecddf807-ad16-4a08-8467-5769da078e9e");
+    expect(res.data.createWishlistEntry.reservableUUID).toBe(
+      "ecddf807-ad16-4a08-8467-5769da078e9e"
+    );
+    wishlistId = res.data.createWishlistEntry.wishlistId;
+  });
+
+  it("fetches a list of wishlists", async () => {
+    const { server } = constructTestServer();
+
+    const { query } = createTestClient(server);
+    const res = await query({ query: GET_WISHLISTS });
+    expect(res.data.wishlists).toHaveLength(1);
+    expect(Number(res.data.wishlists[0].id)).toBe(wishlistId)
   });
 });
