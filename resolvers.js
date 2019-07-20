@@ -27,6 +27,7 @@ export default {
             }
         }),
         createWishlistEntry: async (parent, { wishlistId, reservableUUID, createdBy, opportunitySFID }, { db }, info) => {
+            logger.info("createWishlistEntry called");
             if(wishlistId){
                 return db.wishlistEntries.create({
                     wishlistId: wishlistId,

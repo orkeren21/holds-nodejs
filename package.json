@@ -4,7 +4,7 @@
   "description": "Holds POC in Nodejs",
   "main": "sever.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "tsc": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
     "prod": "tsc && node ./build/server.js",

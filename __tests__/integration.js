@@ -7,6 +7,7 @@ import { ApolloServer } from "apollo-server";
 import typeDefs from "../schema";
 import resolvers from "../resolvers";
 import db from "../models";
+import truncate from "../utils/truncate"
 
 ("use strict");
 
@@ -47,6 +48,15 @@ const CREATE_WISHLIST_ENTRY = gql`
   }
 `;
 
+beforeAll(async () => {
+    await truncate();
+});
+
+afterAll( () => {
+  // Closing the DB connection allows Jest to exit successfully.
+  db.sequelize.close().then(() => console.log('shut down gracefully'));
+});
+
 describe("Queries", () => {
   it("fetches a list of wishlists", async () => {
     // create an instance of ApolloServer that mocks out context, while reusing
@@ -68,7 +78,7 @@ describe("Queries", () => {
     // to run queries against our instance of ApolloServer
     const { query } = createTestClient(server);
     const res = await query({ query: GET_WISHLISTS });
-    console.log(res);
+    console.log(res.data.wishlists);
     expect(true).toBe(true);
     //expect(res).toMatchSnapshot();
   });
@@ -83,8 +93,7 @@ describe("Mutations", () => {
       mutation: CREATE_WISHLIST_ENTRY,
       variables: {reservableUUID: "ecddf807-ad16-4a08-8467-5769da078e9e", createdBy: "Or Keren", opportunitySFID: "opp_id" },
     });
-    console.log(res);
-    
-    expect(true).toBe(true);
+    //console.log(res.data.createWishlistEntry.reservableUUID);
+    expect(res.data.createWishlistEntry.reservableUUID).toBe("ecddf807-ad16-4a08-8467-5769da078e9e");
   });
 });
