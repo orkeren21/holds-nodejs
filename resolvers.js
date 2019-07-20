@@ -1,4 +1,5 @@
 import { logger } from "./utils/logger";
+import { rollbar } from "./utils/rollbar";
 
 export default {
     Wishlist: {
@@ -7,6 +8,7 @@ export default {
     Query: {
         wishlists: (parent, _ , { db }, info) => { 
             logger.info("Called get All Wishlists Query");
+            rollbar.log("hello world");
             return db.wishlists.findAll(); 
             },
         wishlist: (parent, { id }, { db }, info) => db.wishlists.findByPk(id),
