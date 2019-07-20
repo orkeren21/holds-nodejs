@@ -4,7 +4,8 @@
   "description": "Holds POC in Nodejs",
   "main": "sever.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "NODE_ENV=test sequelize db:migrate",
+    "test": "jest --forceExit",
     "tsc": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
     "prod": "tsc && node ./build/server.js",
@@ -47,11 +48,20 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
+    "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.0",
     "@babel/polyfill": "^7.4.4",
-    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.4.4",
+    "apollo-server-testing": "^2.7.0",
+    "babel-jest": "^24.8.0",
+    "jest": "^24.8.0",
     "nodemon": "^1.19.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__utils"
+    ]
   }
 }

@@ -31,7 +31,6 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Wishlist.associate = (models) => {
-        console.log(models)
         Wishlist.hasMany(models.wishlistEntries);
     }
 
