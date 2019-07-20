@@ -1,6 +1,8 @@
 import db from "./models";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
+import { logger } from "./utils/logger";
+
 const { ApolloServer, gql } = require('apollo-server');
 
 // In the most basic sense, the ApolloServer can be started
@@ -16,4 +18,5 @@ const server = new ApolloServer({
 // can utilize middleware options, which we'll discuss later.
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
+  logger.info(`Server ready at ${url}`);
 });

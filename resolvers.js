@@ -1,9 +1,16 @@
+import { logger } from "./utils/logger";
+import { rollbar } from "./utils/rollbar";
+
 export default {
     Wishlist: {
         WishlistEntries: (parent, args, context, info) => parent.getWishlistEntries(),
     },
     Query: {
-        wishlists: (parent, _ , { db }, info) => db.wishlists.findAll(),
+        wishlists: (parent, _ , { db }, info) => { 
+            logger.info("Called get All Wishlists Query");
+            rollbar.log("hello world");
+            return db.wishlists.findAll(); 
+            },
         wishlist: (parent, { id }, { db }, info) => db.wishlists.findByPk(id),
         wishlistByOpp: (parent, { opportunitySFID }, { db }, info) => db.wishlists.findOne({where: {opportunitySFID: opportunitySFID}}),
         wishlistEntries: (parent, _ , { db }, info) => db.wishlistEntries.findAll(),
