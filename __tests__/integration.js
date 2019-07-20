@@ -1,7 +1,6 @@
 import "@babel/polyfill";
 import { createTestClient } from "apollo-server-testing";
 import gql from "graphql-tag";
-//import nock from 'nock';
 
 import { ApolloServer } from "apollo-server";
 import typeDefs from "../schema";
@@ -34,7 +33,6 @@ const GET_WISHLISTS = gql`
     }
   }
 `;
-//wishlistId: Int, reservableUUID: String!, createdBy: String!, opportunitySFID: String
 const CREATE_WISHLIST_ENTRY = gql`
   mutation CreateWishlistEntry(
     $wishlistId: Int
@@ -81,7 +79,7 @@ describe("Mutations and Queries", () => {
         opportunitySFID: "opp_id"
       }
     });
-    //console.log(res.data.createWishlistEntry.reservableUUID);
+
     expect(res.data.createWishlistEntry.reservableUUID).toBe(
       "ecddf807-ad16-4a08-8467-5769da078e9e"
     );
@@ -93,6 +91,7 @@ describe("Mutations and Queries", () => {
 
     const { query } = createTestClient(server);
     const res = await query({ query: GET_WISHLISTS });
+
     expect(res.data.wishlists).toHaveLength(1);
     expect(Number(res.data.wishlists[0].id)).toBe(wishlistId)
   });
