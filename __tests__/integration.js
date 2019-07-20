@@ -1,15 +1,14 @@
-
 import "@babel/polyfill";
-import { createTestClient } from 'apollo-server-testing';
-import gql from 'graphql-tag'
+import { createTestClient } from "apollo-server-testing";
+import gql from "graphql-tag";
 //import nock from 'nock';
 
-import { ApolloServer } from 'apollo-server'
+import { ApolloServer } from "apollo-server";
 import typeDefs from "../schema";
 import resolvers from "../resolvers";
 import db from "../models";
 
-"use strict";
+("use strict");
 
 /**
  * Integration testing utils
@@ -18,7 +17,7 @@ const constructTestServer = () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: { db },
+    context: { db }
   });
 
   return { server };
@@ -27,21 +26,34 @@ const constructTestServer = () => {
 const GET_WISHLISTS = gql`
   query wishlists {
     wishlists {
-        id
-        opportunitySFID
-        createdAt
-        updatedAt
+      id
+      opportunitySFID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+//wishlistId: Int, reservableUUID: String!, createdBy: String!, opportunitySFID: String
+const CREATE_WISHLIST_ENTRY = gql`
+  mutation CreateWishlistEntry($wishlistId: Int, $reservableUUID: String!, $createdBy: String!, $opportunitySFID: String) { 
+    createWishlistEntry(wishlistId: $wishlistId, reservableUUID: $reservableUUID, createdBy: $createdBy, opportunitySFID: $opportunitySFID) {
+      id
+      wishlistId
+      reservableUUID
+      createdBy
+      createdAt
+      updatedAt
     }
   }
 `;
 
-describe('Queries', () => {
-    it('fetches a list of wishlists', async () => {
+describe("Queries", () => {
+  it("fetches a list of wishlists", async () => {
     // create an instance of ApolloServer that mocks out context, while reusing
     // existing dataSources, resolvers, and typeDefs.
     // This function returns the server instance as well as our dataSource
     // instances, so we can overwrite the underlying fetchers
-    const {server} = constructTestServer();
+    const { server } = constructTestServer();
 
     // mock the datasources' underlying fetch methods, whether that's a REST
     // lookup in the RESTDataSource or the store query in the Sequelize datasource
@@ -54,10 +66,25 @@ describe('Queries', () => {
     // use our test server as input to the createTestClient fn
     // This will give us an interface, similar to apolloClient.query
     // to run queries against our instance of ApolloServer
-    const {query} = createTestClient(server);
-    const res = await query({query: GET_WISHLISTS});
+    const { query } = createTestClient(server);
+    const res = await query({ query: GET_WISHLISTS });
     console.log(res);
     expect(true).toBe(true);
     //expect(res).toMatchSnapshot();
+  });
+});
+
+describe("Mutations", () => {
+  it("creates a wishlist entry", async () => {
+    const { server } = constructTestServer();
+
+    const {mutate} = createTestClient(server);
+    const res = await mutate({
+      mutation: CREATE_WISHLIST_ENTRY,
+      variables: {reservableUUID: "ecddf807-ad16-4a08-8467-5769da078e9e", createdBy: "Or Keren", opportunitySFID: "opp_id" },
+    });
+    console.log(res);
+    
+    expect(true).toBe(true);
   });
 });
