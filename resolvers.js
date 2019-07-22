@@ -1,23 +1,8 @@
 import { logger } from "./utils/logger";
 import { rollbar } from "./utils/rollbar";
 import dotenv from "dotenv";
-var amqp = require("rabbit.js"); 
+var amqp = require("rabbit.js");
 dotenv.config();
-
-// var amqpContext = require("rabbit.js").createContext(process.env.CLOUDAMQP_URL);
-// amqpContext.on("ready", function() {
-//           var pub = amqpContext.socket("PUB", {noCreate: true}), sub = amqpContext.socket("SUB", {noCreate: true});
-//           sub.pipe(process.stdout);
-//           sub.connect("holds.nodejs", function() {
-//             pub.connect("holds.nodejs", function() {
-//                 console.log("got here!");
-//               pub.publish("holds.nodejs", JSON.stringify({ welcome: "rabbit.js" }), "utf8");
-//             });
-//           });
-//         });
-// amqpContext.on("error", (error) => {
-//     console.log(`${error}`);
-// });
 
 export default {
   Wishlist: {
@@ -69,8 +54,6 @@ export default {
         amqpContext.on("ready", function() {
           var pub = amqpContext.socket("PUB", { noCreate: true }),
             sub = amqpContext.socket("SUB", { noCreate: true });
-          sub.pipe(process.stdout);
-          sub.connect("holds.nodejs", function() {
             pub.connect("holds.nodejs", function() {
               console.log("got here!");
               pub.publish(
@@ -79,7 +62,6 @@ export default {
                 "utf8"
               );
             });
-          });
         });
         amqpContext.on("error", error => {
           console.log(`${error}`);
@@ -87,11 +69,17 @@ export default {
 
         console.log("creating wishlistEntry");
 
-        return db.wishlistEntries.create({
+        let wishlistEntry = await db.wishlistEntries.create({
           wishlistId: wishlist.id,
           reservableUUID: reservableUUID,
           createdBy: createdBy
         });
+
+        return {
+          success: true,
+          message: "Wishlist and WishlistEntry Created Successfully!",
+          wishlistEntry: wishlistEntry
+        };
       }
     }
   }
