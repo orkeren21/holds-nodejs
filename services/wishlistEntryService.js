@@ -1,4 +1,5 @@
 import db from "../models";
+import * as RabbitMQ from "./rabbitmqService"
 
 export function getAllWishlistEntries() {
   return db.wishlistEntries.findAll();
@@ -25,11 +26,15 @@ export async function createWishlistEntry(
       opportunitySFID: opportunitySFID
     });
 
-    return await db.wishlistEntries.create({
+    let wishlistEntry = await db.wishlistEntries.create({
       wishlistId: wishlist.id,
       reservableUUID: reservableUUID,
       createdBy: createdBy
     });
+
+    RabbitMQ.publishEntity(wishlistEntry);
+
+    return wishlistEntry;
   }
 }
 

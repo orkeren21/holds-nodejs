@@ -1,10 +1,5 @@
-import { logger } from "./utils/logger";
-import { rollbar } from "./utils/rollbar";
 import * as WishlistService from "./services/wishlistService";
 import * as WishlistEntryService from "./services/wishlistEntryService";
-import dotenv from "dotenv";
-var amqp = require("rabbit.js");
-dotenv.config();
 
 export default {
   Wishlist: {
