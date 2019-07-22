@@ -15,6 +15,14 @@ export default `
     deletedAt: String
     WishlistEntries: [WishlistEntry]!
   }
+
+  type WishlistEntryResponse {
+    success: Boolean!
+    message: String
+    wishlistEntry: WishlistEntry
+  }
+
+
   type Query {
     wishlists: [Wishlist!]!
     wishlist(id: ID!): Wishlist!
@@ -24,6 +32,6 @@ export default `
   type Mutation {
     createWishlist(opportunitySFID: String!): Wishlist!
     deleteWishlist(id: ID!): Int!
-    createWishlistEntry(wishlistId: Int, reservableUUID: String!, createdBy: String!, opportunitySFID: String): WishlistEntry
+    createWishlistEntry(wishlistId: Int, reservableUUID: String!, createdBy: String!, opportunitySFID: String): WishlistEntryResponse
   }
 `;
