@@ -15,13 +15,14 @@ export default {
   Mutation: {
     createWishlist: (parent, { opportunitySFID }, { db }, info) => WishlistService.createWishlist(opportunitySFID),
     deleteWishlist: (parent, { id }, { db }, info) => WishlistService.deleteWishlistById(id),
-    createWishlistEntry: (parent, { wishlistId, reservableUUID, createdBy, opportunitySFID }, { db }, info) => {
-      let wishlistEntry = WishlistEntryService.createWishlistEntry(
+    createWishlistEntry: async (parent, { wishlistId, reservableUUID, createdBy, opportunitySFID }, { db }, info) => {
+      let wishlistEntry = await WishlistEntryService.createWishlistEntry(
         wishlistId,
         reservableUUID,
         createdBy,
         opportunitySFID
       );
+
       return {
         success: true,
         message: "Wishlist and WishlistEntry Created Successfully!",

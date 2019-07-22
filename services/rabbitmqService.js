@@ -13,7 +13,7 @@ export function publishEntity(entity) {
     
     pub.connect("holds.nodejs", function() {
       logger.info("Sending Payload to RabbitMQ");
-      pub.publish("holds.nodejs", JSON.stringify({ entity: entity }), "utf8");
+      pub.publish("holds.nodejs", JSON.stringify(entity), "utf8");
     });
   });
   amqpContext.on("error", error => {
