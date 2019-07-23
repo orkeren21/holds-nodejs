@@ -1,0 +1,7 @@
+DATABASE_URL=postgres://localhost/holds
+LOGENTRIES_TOKEN=1748b26c-3d1f-44a4-b567-8d66d668f9f1
+ROLLBAR_TOKEN=6945865eba9b4e95aa6a64ffd2160f0d
+CLOUDAMQP_URL=amqp://hqezkggk:ebspAkZ-QiO5JwvcCTXtlwNB5g2Os-5D@happy-polar-bear.rmq.cloudamqp.com/hqezkggk
+DB_HOST=localhost
+DB_USERNAME=or.keren
+DB_NAME=holds
