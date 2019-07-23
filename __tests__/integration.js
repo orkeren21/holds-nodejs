@@ -46,12 +46,16 @@ const CREATE_WISHLIST_ENTRY = gql`
       createdBy: $createdBy
       opportunitySFID: $opportunitySFID
     ) {
-      id
-      wishlistId
-      reservableUUID
-      createdBy
-      createdAt
-      updatedAt
+      success
+      message
+      wishlistEntry {
+        id
+        wishlistId
+        reservableUUID
+        createdBy
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -79,11 +83,10 @@ describe("Mutations and Queries", () => {
         opportunitySFID: "opp_id"
       }
     });
-
-    expect(res.data.createWishlistEntry.reservableUUID).toBe(
-      "ecddf807-ad16-4a08-8467-5769da078e9e"
-    );
-    wishlistId = res.data.createWishlistEntry.wishlistId;
+    expect(res.data.createWishlistEntry.success).toBe(true);
+    expect(res.data.createWishlistEntry.message).toBe("Wishlist and WishlistEntry Created Successfully!");
+    expect(res.data.createWishlistEntry.wishlistEntry.reservableUUID).toBe("ecddf807-ad16-4a08-8467-5769da078e9e");
+    wishlistId = res.data.createWishlistEntry.wishlistEntry.wishlistId;
   });
 
   it("fetches a list of wishlists", async () => {
@@ -93,6 +96,6 @@ describe("Mutations and Queries", () => {
     const res = await query({ query: GET_WISHLISTS });
 
     expect(res.data.wishlists).toHaveLength(1);
-    expect(Number(res.data.wishlists[0].id)).toBe(wishlistId)
+    expect(Number(res.data.wishlists[0].id)).toBe(wishlistId);
   });
 });
