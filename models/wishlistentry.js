@@ -1,3 +1,5 @@
+import { logger } from "../utils/logger";
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const WishlistEntry = sequelize.define('wishlistEntries', {

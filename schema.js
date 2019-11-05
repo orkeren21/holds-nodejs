@@ -1,7 +1,11 @@
 export default `
+"An Entry for a Wishlist, relates to a reservable"
   type WishlistEntry {
     id: ID!
     wishlistId: Int!
+    """
+    A [UUID 4](https://en.wikipedia.org/wiki/Universally_unique_identifier) of a Spaceman Reservable
+    """
     reservableUUID: String!
     createdBy: String!
     createdAt: String! 
