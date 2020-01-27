@@ -10,7 +10,8 @@ export default {
     wishlist: (parent, { id }, { db }, info) => WishlistService.findWishlistById(id),
     wishlistByOpp: (parent, { opportunitySFID }, { db }, info) =>
       WishlistService.findWishlistByOpportunityId(opportunitySFID),
-    wishlistEntries: (parent, _, { db }, info) => db.wishlistEntries.findAll()
+    wishlistEntries: (parent, _, { db }, info) => WishlistEntryService.getAllWishlistEntries(),
+    wishlistEntryByWishlistID: (parent, { wishlistID}, { db }, info) => WishlistEntryService.findEntriesByWishlistId(wishlistID)
   },
   Mutation: {
     createWishlist: (parent, { opportunitySFID }, { db }, info) => WishlistService.createWishlist(opportunitySFID),

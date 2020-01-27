@@ -20,5 +20,5 @@ server.applyMiddleware({ app });
 app.use(express.static('public'));
 app.listen({ port: 4000 }, () => {
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
-  logger.info(`Server ready at ${url}`);
+  //logger.info(`Server ready at ${url}`);
 });

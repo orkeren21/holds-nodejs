@@ -28,6 +28,7 @@ export default `
     wishlist(id: ID!): Wishlist!
     wishlistByOpp(opportunitySFID: String!): Wishlist!
     wishlistEntries: [WishlistEntry!]!
+    wishlistEntryByWishlistID(wishlistID: ID!): [WishlistEntry]
   }
   type Mutation {
     createWishlist(opportunitySFID: String!): Wishlist!

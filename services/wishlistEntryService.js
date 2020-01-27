@@ -9,6 +9,10 @@ export function findWishlistEntryById(id) {
   return db.wishlistEntries.findByPk(id);
 }
 
+export function findEntriesByWishlistId(wishlistID){
+  return db.wishlistEntries.findAll({ where: {wishlistId: wishlistID}});
+}
+
 export async function createWishlistEntry(
   wishlistId,
   reservableUUID,
@@ -32,7 +36,8 @@ export async function createWishlistEntry(
       createdBy: createdBy
     });
 
-    RabbitMQ.publishEntity(wishlistEntry);
+    //! Removed the line below since we don't have rabbitmq no more
+    //RabbitMQ.publishEntity(wishlistEntry); 
 
     return wishlistEntry;
   }

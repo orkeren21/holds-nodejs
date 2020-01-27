@@ -1,8 +1,8 @@
-import dotenv from "dotenv";
-import Logger from "le_node";
+//import dotenv from "dotenv";
+//import Logger from "le_node";
 
-dotenv.config();
+//dotenv.config();
 
-export const logger = new Logger({
-  token: process.env.LOGENTRIES_TOKEN
-});
+//export const logger = new Logger({
+  // token: process.env.LOGENTRIES_TOKEN
+//});
