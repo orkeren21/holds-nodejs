@@ -1,10 +1,11 @@
+import express from 'express';
+import cors from 'cors';
+
 import db from "./models";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
 import * as WishlistService from "./services/wishlistService";
 import * as WishlistEntryService from "./services/wishlistEntryService";
-
-const express = require('express');
 
 const { ApolloServer, gql } = require("apollo-server-express");
 
@@ -17,6 +18,7 @@ const server = new ApolloServer({
 });
 
 const app = express();
+app.use(cors());
 server.applyMiddleware({ app });
 
 app.use(express.static('public'));
