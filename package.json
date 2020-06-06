@@ -30,7 +30,7 @@
   "dependencies": {
     "amqplib": "^0.5.5",
     "apollo-server": "^2.9.16",
-    "apollo-server-express": "^2.9.16",
+    "apollo-server-express": "^2.14.2",
     "bluebird": "^3.7.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
